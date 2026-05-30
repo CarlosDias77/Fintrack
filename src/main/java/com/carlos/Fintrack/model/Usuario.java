@@ -1,5 +1,6 @@
 package com.carlos.Fintrack.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
     private String nome;
     private String email;
