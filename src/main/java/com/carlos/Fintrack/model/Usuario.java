@@ -19,5 +19,4 @@ public class Usuario {
     private String cpf;
     private LocalDate dataNascimento;
 
-
 }
