@@ -135,4 +135,4 @@ gerado é único mesmo para senhas iguais, devido ao salt automático.
 ## 👨‍💻 Autor
 
 Carlos — Desenvolvedor Java Backend em formação.  
-[GitHub](https://github.com/CarlosDias77) · [LinkedIn](https://www.linkedin.com/in/carlos-henrique-corsi-dias-0502432ba))
+[GitHub](https://github.com/CarlosDias77) · [LinkedIn](https://www.linkedin.com/in/carlos-henrique-corsi-dias-0502432ba)
