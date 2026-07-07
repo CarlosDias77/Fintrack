@@ -1,5 +1,6 @@
 package com.carlos.Fintrack.controller;
 
+import com.carlos.Fintrack.dto.ResumoFinanceiro;
 import com.carlos.Fintrack.model.Lancamento;
 import com.carlos.Fintrack.service.LancamentoService;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,10 @@ public class LancamentoController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         lancamentoService.deletar(id);
+    }
+
+    @GetMapping("/resumo/{usuarioId}")
+    public ResumoFinanceiro resumo(@PathVariable Long usuarioId) {
+        return lancamentoService.gerarResumo(usuarioId);
     }
 }

@@ -22,7 +22,6 @@ public class UsuarioService {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
-    // resto do código permanece igual
 
     public List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
