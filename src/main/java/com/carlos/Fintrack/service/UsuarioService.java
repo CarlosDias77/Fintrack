@@ -1,5 +1,7 @@
 package com.carlos.Fintrack.service;
 
+import com.carlos.Fintrack.exception.LancamentoNaoEncontradoException;
+import com.carlos.Fintrack.exception.UsuarioNaoEncontradoException;
 import com.carlos.Fintrack.model.Usuario;
 import com.carlos.Fintrack.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +30,7 @@ public class UsuarioService {
     }
     public Usuario atualizar(Long id, Usuario usuarioAtualizado) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado"));
         usuario.setNome(usuarioAtualizado.getNome());
         usuario.setEmail(usuarioAtualizado.getEmail());
         usuario.setCpf(usuarioAtualizado.getCpf());
@@ -37,6 +39,9 @@ public class UsuarioService {
     }
 
     public void deletar(Long id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new UsuarioNaoEncontradoException("Usuário não existe");
+        }
         usuarioRepository.deleteById(id);
     }
 }
