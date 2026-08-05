@@ -1,6 +1,8 @@
 package com.carlos.Fintrack.service;
 
 import com.carlos.Fintrack.dto.ResumoFinanceiro;
+import com.carlos.Fintrack.exception.LancamentoNaoEncontradoException;
+import com.carlos.Fintrack.exception.UsuarioInvalidoException;
 import com.carlos.Fintrack.model.Lancamento;
 import com.carlos.Fintrack.model.TipoLancamento;
 import com.carlos.Fintrack.repository.LancamentoRepository;
@@ -19,7 +21,7 @@ public class LancamentoService {
 
     public Lancamento salvar(Lancamento lancamento) {
         if (lancamento.getUsuario() == null || lancamento.getUsuario().getId() == null) {
-            throw new RuntimeException("Usuario é obrigatório");
+            throw new UsuarioInvalidoException("Usuario é obrigatório");
         }
         return lancamentoRepository.save(lancamento);
     }
@@ -29,6 +31,9 @@ public class LancamentoService {
     }
 
     public void deletar(Long id) {
+        if (!lancamentoRepository.existsById(id)) {
+            throw new LancamentoNaoEncontradoException("ID não existe");
+        }
         lancamentoRepository.deleteById(id);
     }
 

@@ -1,6 +1,8 @@
 package com.carlos.Fintrack;
 
+import com.carlos.Fintrack.dto.ResumoFinanceiro;
 import com.carlos.Fintrack.model.Lancamento;
+import com.carlos.Fintrack.model.TipoLancamento;
 import com.carlos.Fintrack.model.Usuario;
 import com.carlos.Fintrack.repository.LancamentoRepository;
 import com.carlos.Fintrack.service.LancamentoService;
@@ -83,9 +85,29 @@ public class LancamentoServiceTest {
     }
     @Test
     void deveDeletarUsuariosPorId() {
+        when(lancamentoRepository.existsById(1L)).thenReturn(true);
         lancamentoService.deletar(1L);
-
         verify(lancamentoRepository, times(1)).deleteById(1l);
     }
+    @Test
+    void deveResumirLancamentosDeReceitaEDespesa() {
+        Lancamento lancamentoDESPESA = new Lancamento();
+        lancamentoDESPESA.setTipo(TipoLancamento.DESPESA);
+        lancamentoDESPESA.setValor(100.0);
+        Lancamento lancamentoRECEITA = new Lancamento();
+        lancamentoRECEITA.setTipo(TipoLancamento.RECEITA);
+        lancamentoRECEITA.setValor(250.0);
 
+        List<Lancamento> lista = new ArrayList<>();
+        lista.add(lancamentoDESPESA);
+        lista.add(lancamentoRECEITA);
+
+        when(lancamentoRepository.findByUsuarioId(1L)).thenReturn(lista);
+
+        ResumoFinanceiro resultado = lancamentoService.gerarResumo(1l);
+
+        assertEquals(100.0, resultado.totalDespesas());
+        assertEquals(250.0, resultado.totalReceitas());
+        assertEquals(150.0, resultado.saldo());
+    }
 }
